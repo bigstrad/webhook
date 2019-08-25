@@ -9,11 +9,13 @@ dotenv.config();
 const port = process.env.TWIT_TEE_WEBHOOK_PORT || 7001;
 const secret = process.env.TWIT_TEE_WEBHOOK_SECRET;
 const script = process.env.TWIT_TEE_WEBHOOK_SCRIPT;
+const branch = process.env.TWIT_TEE_WEBHOOK_BRANCH;
  
 http.createServer(function (req, res) {
     req.on('data', function(chunk) {
         let sig = "sha1=" + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
-
+        console.log("configured branch=>"+branch); // TODO remove
+        console.log("submitted branch=>"+req.repository.default_branch); // TODO remove
         if (req.headers['x-hub-signature'] == sig) {
             shell.exec(script)
         }
