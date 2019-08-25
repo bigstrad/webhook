@@ -1,6 +1,6 @@
 const http = require('http');
 const crypto = require('crypto');
-// const { exec } = require('child_process');
+const { exec } = require('child_process');
 const shell = require('shelljs');
 const dotenv = require('dotenv');
 dotenv.config();
