@@ -12,6 +12,10 @@ const script = process.env.TWIT_TEE_WEBHOOK_SCRIPT;
 const branch = process.env.TWIT_TEE_WEBHOOK_BRANCH;
  
 http.createServer(function (req, res) {
+    console.log("port => ", port);
+    console.log("secret => ", secret);
+    console.log("script => ", script);
+    console.log("branch => ", branch);
     req.on('data', function(chunk) {
         const json = JSON.parse(chunk);
         let sig= "sha1=" + crypto.createHmac('sha1', secret).update(JSON.stringify(json)).digest('hex');
