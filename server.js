@@ -13,11 +13,15 @@ const branch = process.env.TWIT_TEE_WEBHOOK_BRANCH;
  
 http.createServer(function (req, res) {
     req.on('data', function(chunk) {
-        let sig = "sha1=" + crypto.createHmac('sha1', secret).update(chunk.toString()).digest('hex');
-        console.log("configured branch=>"+branch); // TODO remove
-        console.log("submitted branch=>"+req.repository.default_branch); // TODO remove
-        if (req.headers['x-hub-signature'] == sig) {
-            shell.exec(script)
+        const json = JSON.parse(chunk);
+        let sig= "sha1=" + crypto.createHmac('sha1', secret).update(JSON.stringify(json)).digest('hex');
+        console.log("branch => ", json.ref);
+        if (json.ref == branch) {
+            console.log("branch ok");
+            if (req.headers['x-hub-signature'] == sig) {
+                console.log("security ok");
+                shell.exec(script)
+            }
         }
     });
 
