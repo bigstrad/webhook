@@ -9,14 +9,17 @@ dotenv.config();
 const port = process.env.TWIT_TEE_WEBHOOK_PORT || 7001;
 const secret = process.env.TWIT_TEE_WEBHOOK_SECRET;
 const script = process.env.TWIT_TEE_WEBHOOK_SCRIPT;
-const branch = process.env.TWIT_TEE_WEBHOOK_BRANCH;
- 
+const branch = process.env.TWIT_TEE_WEBHOOK_BRANCH; 
+console.log("port => ", port);
+console.log("secret => ", secret);
+console.log("script => ", script);
+console.log("branch => ", branch);
 http.createServer(function (req, res) {
-    console.log("port => ", port);
-    console.log("secret => ", secret);
-    console.log("script => ", script);
-    console.log("branch => ", branch);
     req.on('data', function(chunk) {
+        console.log("port => ", port);
+        console.log("secret => ", secret);
+        console.log("script => ", script);
+        console.log("branch => ", branch);
         const json = JSON.parse(chunk);
         let sig= "sha1=" + crypto.createHmac('sha1', secret).update(JSON.stringify(json)).digest('hex');
         console.log("branch => ", json.ref);
