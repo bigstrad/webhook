@@ -2,8 +2,10 @@ const http = require('http');
 const crypto = require('crypto');
 const { exec } = require('child_process');
 const shell = require('shelljs');
-const dotenv = require('dotenv');
-dotenv.config();
+const path = require('path'); 
+// const dotenv = require('dotenv');
+// dotenv.config();
+const dotenv = require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // map environment variables to local variables
 const port = process.env.TWIT_TEE_WEBHOOK_PORT || 7001;
